@@ -1,28 +1,29 @@
 package com.caiiiyua.myapplication.base.ui
 
-import java.lang.ref.WeakReference
-
 /**
  * Created by CaiY on 22/02/18.
  */
 open class BasePresenter<V : BaseView> : Presenter<V> {
-  private var weakReference: WeakReference<V>? = null
+
+  private val _isViewAttached: Boolean get() = _view != null
+  private var _view: V? = null
+
+  val view: V get() = _view ?: throw ViewNotAttachedException()
 
   override fun attachView(view: V) {
-    if (!isViewAttached) {
-      weakReference = WeakReference(view)
-      view.setPresenter(this)
+    if (!_isViewAttached) {
+      _view = view
     }
   }
 
   override fun detachView() {
-    weakReference?.clear()
-    weakReference = null
+    _view = null
   }
 
-  private val isViewAttached: Boolean
-    get() = weakReference != null && weakReference!!.get() != null
+  fun isViewAttached(): Boolean = _isViewAttached
 
-  val view: V? get() = weakReference?.get()
+  class ViewNotAttachedException : RuntimeException (
+          "Please call Presenter.attachView(MvpView) before requesting data to the Presenter"
+  )
 
 }
