@@ -1,6 +1,7 @@
 package com.caiiiyua.myapplication.base.injection.modules
 
 import com.caiiiyua.myapplication.data.remote.RibotApiService
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -25,13 +26,16 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient = OkHttpClient()
+    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
+            .addNetworkInterceptor(StethoInterceptor())
+            .build()
 
     @Provides
     @Singleton
     fun provideRibotApiService(okHttpClient: OkHttpClient, gson: Gson): RibotApiService {
         return Retrofit.Builder()
                 .client(okHttpClient)
+                .baseUrl("https://api.ribot.io/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()

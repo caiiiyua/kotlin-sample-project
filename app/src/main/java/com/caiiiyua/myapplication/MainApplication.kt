@@ -4,6 +4,7 @@ import android.app.Application
 import com.caiiiyua.myapplication.base.injection.components.AppComponent
 import com.caiiiyua.myapplication.base.injection.components.DaggerAppComponent
 import com.caiiiyua.myapplication.base.injection.modules.AppModule
+import com.facebook.stetho.Stetho
 import timber.log.Timber
 
 /**
@@ -19,6 +20,9 @@ class MainApplication : Application() {
   override fun onCreate() {
     super.onCreate()
     component.inject(this)
-    if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
+    if (BuildConfig.DEBUG) {
+      Timber.plant(Timber.DebugTree())
+      Stetho.initializeWithDefaults(this)
+    }
   }
 }
