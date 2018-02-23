@@ -26,10 +26,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        // Common Test Dir
+        def commonTestDir = 'src/commonTest/'
+        test {
+            java.srcDir commonTestDir
+        }
+        androidTest {
+            java.srcDir commonTestDir
+        }
+    }
 }
 
 dependencies {
-    def SUPPORT_VERSION = "27.0.2"
+    final SUPPORT_VERSION = "27.0.2"
+    final MOCKITO_VERSION = '2.15.0'
+
+    def mockito = "org.mockito:mockito-core:$MOCKITO_VERSION"
+    def mockitoKotlin = "com.nhaarman:mockito-kotlin:1.5.0"
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Kotlin
@@ -73,6 +89,10 @@ dependencies {
 
     // Unit Test
     testImplementation 'junit:junit:4.12'
+    testImplementation mockito
+    testImplementation (mockitoKotlin) {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
+    }
 
     // Android Test
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

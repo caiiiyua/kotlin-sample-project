@@ -33,7 +33,7 @@ class MainPresenter
                         if (!t.isEmpty()) view.showRibots(t) else view.showRibotsEmpty()
                     } else view.showError()
                 }, {
-                    t: Throwable? -> view.showError()
+                    view.showError()
                 })
     }
 
