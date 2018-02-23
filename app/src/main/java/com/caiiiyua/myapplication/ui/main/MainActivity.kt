@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -18,7 +19,7 @@ class MainActivity : BaseActivity(), MainContract.View {
   @Inject lateinit var presenter: MainPresenter
   @Inject lateinit var ribotsAdapter: RibotsAdapter
 
-  @BindView(R.id.recycler_view) lateinit var recyclerView: RecyclerView
+  @BindView(R.id.toolbar) lateinit var toolbar: Toolbar
 
   private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
     when (item.itemId) {
@@ -42,10 +43,12 @@ class MainActivity : BaseActivity(), MainContract.View {
     setContentView(R.layout.activity_main)
     ButterKnife.bind(this)
 
+    toolbar.title = resources.getString(R.string.app_name)
+    setSupportActionBar(toolbar)
     navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-    recyclerView.adapter = ribotsAdapter
-    recyclerView.layoutManager = LinearLayoutManager(this)
+    recycler_view.adapter = ribotsAdapter
+    recycler_view.layoutManager = LinearLayoutManager(this)
     presenter.attachView(this)
     presenter.loadRibots()
   }

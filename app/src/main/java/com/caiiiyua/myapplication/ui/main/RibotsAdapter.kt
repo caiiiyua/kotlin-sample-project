@@ -9,8 +9,10 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.caiiiyua.myapplication.R
+import com.caiiiyua.myapplication.R.id.view_hex_color
 import com.caiiiyua.myapplication.data.remote.model.Ribot
 import com.caiiiyua.myapplication.ui.main.RibotsAdapter.RibotViewHolder
+import kotlinx.android.synthetic.main.item_ribots.view.*
 import javax.inject.Inject
 
 /**

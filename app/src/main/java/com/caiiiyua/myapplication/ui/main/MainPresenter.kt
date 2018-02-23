@@ -30,7 +30,7 @@ class MainPresenter
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     t: List<Ribot>? -> if (t != null) {
-                        if (t.isEmpty()) view.showRibots(t) else view.showRibotsEmpty()
+                        if (!t.isEmpty()) view.showRibots(t) else view.showRibotsEmpty()
                     } else view.showError()
                 }, {
                     t: Throwable? -> view.showError()
