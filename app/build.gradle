@@ -37,6 +37,10 @@ android {
             java.srcDir commonTestDir
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
